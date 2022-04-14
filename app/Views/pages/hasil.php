@@ -9,7 +9,7 @@
     <meta content="" name="description">
     <meta content="" name="keywords">
 
-    <!-- Favicons -->
+    <!-- Favicons 
     <link href="/assets/img/logo.png" rel="icon">
 
     <!-- Google Fonts -->
@@ -41,10 +41,8 @@
 
 
 
-    <main id="main" class="main">
-
-
-    <?= $this->include('/layout/sidebar') ?>
+<main >
+    
 
 
 
@@ -55,7 +53,7 @@
                     <div class="d-flex flex-column custom__header">
                         <h1>Muhammad Rayandika</h1>
                         <h1>152018132</h1>
-                        <h4>Regresi Linear</h4>
+                        <h4>Analisis Pengaruh Jumlah Penduduk terhadap Jumlah Kemiskinan</h4>
                     </div>
 
                 </div>
@@ -65,6 +63,71 @@
             <!-- ENd Header -->
 
 
+
+<div class="custom__card__large">
+<form enctype="multipart/form-data" role="form" action="<?= base_url('hasil/create__input/'); ?>" method="post" id="BODEksisting-form">
+
+
+        <div class="d-flex justify-content-between align-items-center container__create">
+            <h3 for="x">Jumlah Penduduk(X)</h3>
+            <input class="form-select form-control" name="x" type="input" id="x">
+
+        </div>
+        <div class="d-flex justify-content-between align-items-center container__create">
+            <h3 for="y">Jumlah Kemiskinan(Y)</h3>
+            <input class="form-control " name="y" type="input" id="y">
+
+        </div>
+   
+
+        <div class="custom__header__card__large">
+            <button type="submit" class="btn btn-primary">Simpan Data</button>
+        </div>
+    </form>
+
+</div>
+
+
+<div class="custom__card__large">
+    <div class="custom__header__card__large">
+
+        
+    </div>
+
+    <div class="table__wrapper">
+        <table class="custom__table">
+            <thead>
+                <tr>
+                    <th scope="col">No</th>
+                    <th scope="col">Jumlah Penduduk (X)</th>
+                    <th scope="col">Jumlah Kemiskinan (Y)</th>
+                   
+                </tr>
+            </thead>
+            <tbody>
+            <tbody>
+                <?php foreach ($input as $data) : ?>
+                    
+                    <tr>
+                        <td><?= $data['id']?></td>
+                        <td><?= $data['x']?></td>
+                        <td><?= $data['y']?></td>
+
+                    </tr>
+                    <?php endforeach; ?>
+            </tbody>
+
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+</div>
+
+
+
+
             <div class="custom__wrapper">
 
                 <!-- end of small card -->
@@ -72,13 +135,13 @@
 
                 <div class="custom__card__large">
                     <form enctype="multipart/form-data" role="form"
-                        action="<?= base_url('/Hasil/create'); ?>" method="post" >
+                        action="<?= base_url('/Hasil/create__hasil'); ?>" method="post" >
 
 
                        
                         <div class="d-flex justify-content-between align-items-center container__create">
                             <h3 for="a">A</h3>
-                            <input class="form-control " name="a" type="input" id="a" readonly >
+                           <input class="form-control " name="a" type="input" id="a" readonly >
 
                         </div>
                         <div class="d-flex justify-content-between align-items-center container__create" readonly>
@@ -115,6 +178,11 @@
                             <textarea class="form-control " name="simpulan-korelasi" type="input" id="simpulan-korelasi" readonly></textarea>
 
                         </div>
+
+                        <div class="chart__container" style={height : 450px;}>
+                        <canvas id="myChart" ></canvas>
+                        </div>
+                        
 
                         <div class="custom__header__card__large">
                             <button type="button" class="btn btn-primary" onclick="doMath()" >Cek Hasil</button>
@@ -160,9 +228,6 @@
 
                                     </tr>
                                     <?php endforeach; ?>
-
-                                
-
                             </tbody>
 
                             </tbody>
@@ -172,6 +237,13 @@
 
                 </div>
             </div>
+
+            <div class="custom__wrapper">
+
+<!-- end of small card -->
+
+
+
 
 
 
@@ -203,12 +275,46 @@
 </body>
 
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js"></script>
+
 <script>
 
 
-  // bikin variabel x dan y  
 
-  const originalOutput = (<?php echo json_encode($input) ?>);
+
+
+// bikin variabel x dan y  
+
+const originalOutput = (<?php echo json_encode($input) ?>);
+
+
+// scatter plot
+
+var ctx = document.getElementById("myChart").getContext('2d');
+
+// Define the data 
+var data = originalOutput;
+
+// End Defining data
+var options = {responsive: true, // Instruct chart js to respond nicely.
+    maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
+};
+
+// End Defining data
+var myChart = new Chart(ctx, {
+    type: 'scatter',
+    data: {
+        datasets: [{
+                label: 'Scatter Plot', // Name the series
+                data: data, // Specify the data values array
+          borderColor: '#2196f3', // Add custom color border            
+          backgroundColor: '#2196f3', // Add custom color background (Points and Fill)
+            }]
+    },
+    options: options
+});
+
+
 
 
 //   variabel X
@@ -238,6 +344,11 @@ const convertY = variabelY.map(function(item) {
             return a + b;
         }, 0);
 
+
+        
+
+        
+
         
 
         // bikin perhitungan kuadrat dari total x (sigma x * sigma x)
@@ -265,6 +376,7 @@ const convertY = variabelY.map(function(item) {
         const convertXKuadrat = xKuadrat.map(function(item) {
             return parseFloat(item);
         });
+
 
 
 
@@ -299,14 +411,10 @@ const convertY = variabelY.map(function(item) {
         const xKaliY = convertX.map((item, index)=>  {
             return item * convertY[index]; ;
         });
-
         const convertXKaliY = xKaliY.map(function(item) {
             return parseFloat(item);
         });
-
-
         // total x kali y ( total x kali y)
-
         const totalXKaliY = convertXKaliY.reduce(function(a, b) {
             return a + b;
         }, 0);
@@ -351,18 +459,23 @@ const convertY = variabelY.map(function(item) {
   function doMath()
     {
 
-        const a = (totalY * totalXKuadrat) - (totalX * totalXKaliY) / (lengthData *  totalXKuadrat - kuadratTotalX );
+        // const a = (totalY * totalXKuadrat) - (totalX * totalXKaliY) / (lengthData *  totalXKuadrat - kuadratTotalX );
 
-        const b = (lengthData * totalXKaliY - totalX * totalY) / (lengthData * totalX - kuadratTotalX);
+        // const b = (lengthData * totalXKaliY - totalX * totalY) / (lengthData * totalX - kuadratTotalX);
 
+        const a = ((totalY * totalXKuadrat) - (totalX * totalXKaliY)) / ((lengthData * totalXKuadrat) - kuadratTotalX);
+
+        const b = ((lengthData * totalXKaliY) - (totalX * totalY)) / ((lengthData * totalXKuadrat) - kuadratTotalX);
 
         const result = "Y = " + a + " + " + "(" + b + "X" + ")" ;
 
 
+        const pearson = (totalXKaliY - (totalX * totalY) / lengthData) / (Math.sqrt(totalXKuadrat - (totalX * totalX) / lengthData) * Math.sqrt(totalYKuadrat - (totalY * totalY) / lengthData));
+
         
 
 
-        const pearson = ( lengthData *  totalXKaliY  - (totalX * totalY) / lengthData) /  Math.sqrt((lengthData * totalXKuadrat - (totalX * totalX) ) *  ( lengthData * totalYKuadrat - (totalY * totalY) ));
+        // const pearson = ( lengthData *  totalXKaliY  - (totalX * totalY) / lengthData) /  Math.sqrt((lengthData * totalXKuadrat - (totalX * totalX) ) *  ( lengthData * totalYKuadrat - (totalY * totalY) ));
 
 
 
@@ -421,9 +534,9 @@ const convertY = variabelY.map(function(item) {
 
         
         
-        document.getElementById('a').value=a;
+        document.getElementById('a').value=a.toFixed(2);
 
-        document.getElementById('b').value=b;
+        document.getElementById('b').value=b.toFixed(2);
 
         document.getElementById('result').value=result;
 

@@ -4,6 +4,8 @@ namespace App\Controllers;
 
 use App\Models\InputModel;
 
+use App\Models\HasilModel;
+
 
 
 
@@ -15,6 +17,7 @@ class Input extends BaseController
     {
        
         $this->InputModel = new InputModel();
+        $this->HasilModel = new HasilModel();
     }
     
 
@@ -24,10 +27,12 @@ class Input extends BaseController
 
       
         $input = $this->InputModel->input_list();
+        $hasil = $this->HasilModel->hasil_list();
         
         $data = [
             'title' => 'BOD Eksisting',
-            'input' => $input
+            'input' => $input,
+            'hasil' => $hasil,
         ];
 
         return view('pages/input' , $data);
@@ -36,17 +41,5 @@ class Input extends BaseController
 
         
  
-    public function create()
-    {
-        $data = [
-            
-            'id' => $this->request->getPost('id'),
-            'x' => $this->request->getPost('x'),
-            'y' => $this->request->getPost('y'),
-          
-        ];
-        $this->InputModel->input_create($data);
-        return redirect()->to('/');
-    }
     
 }

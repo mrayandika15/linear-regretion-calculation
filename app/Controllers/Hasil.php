@@ -38,7 +38,7 @@ class Hasil extends BaseController
     }
     
 
-    public function create()
+    public function create__hasil()
     {
         $data = [
             
@@ -56,6 +56,19 @@ class Hasil extends BaseController
 
 
  
+
+    public function create__input()
+    {
+        $data = [
+            
+            'id' => $this->request->getPost('id'),
+            'x' => $this->request->getPost('x'),
+            'y' => $this->request->getPost('y'),
+          
+        ];
+        $this->InputModel->input_create($data);
+        return redirect()->to('/');
+    }
 
 
 

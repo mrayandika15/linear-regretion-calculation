@@ -55,7 +55,8 @@
                     <div class="d-flex flex-column custom__header">
                         <h1>Muhammad Rayandika</h1>
                         <h1>152018132</h1>
-                        <h4>Regresi Linear</h4>
+                        <h4>Analisis Pengaruh Jumlah Penduduk terhadap Jumlah Kemiskinan
+</h4>
                     </div>
 
                 </div>
@@ -75,12 +76,12 @@
 
 
                         <div class="d-flex justify-content-between align-items-center container__create">
-                            <h3 for="x">X</h3>
+                            <h3 for="x">Jumlah Penduduk(X)</h3>
                             <input class="form-select form-control" name="x" type="input" id="x">
 
                         </div>
                         <div class="d-flex justify-content-between align-items-center container__create">
-                            <h3 for="y">Y</h3>
+                            <h3 for="y">Jumlah Kemiskinan(Y)</h3>
                             <input class="form-control " name="y" type="input" id="y">
 
                         </div>
@@ -97,7 +98,7 @@
                 <div class="custom__card__large">
                     <div class="custom__header__card__large">
 
-                        <button type="button" class="btn btn-primary">Input Excel</button>
+                        
                     </div>
 
                     <div class="table__wrapper">
@@ -105,8 +106,8 @@
                             <thead>
                                 <tr>
                                     <th scope="col">No</th>
-                                    <th scope="col">X</th>
-                                    <th scope="col">Y</th>
+                                    <th scope="col">Jumlah Penduduk (X)</th>
+                                    <th scope="col">Jumlah Kemiskinan (Y)</th>
                                    
                                 </tr>
                             </thead>
@@ -131,6 +132,8 @@
                 </div>
             </div>
 
+
+            
 
 
 

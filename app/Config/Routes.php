@@ -31,9 +31,9 @@ $routes->setAutoRoute(true);
 
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
-$routes->get('/', 'Input::index');
-$routes->get('/hasil', 'Hasil::index');
-$routes->get('/grafik', 'Grafik::index');
+$routes->get('/', 'Hasil::index');
+
+
 
 /*
  * --------------------------------------------------------------------
